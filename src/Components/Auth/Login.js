@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Grid, InputAdornment, Link, Checkbox, FormControl, FormControlLabel, FormGroup, Box, IconButton, createTheme, ThemeProvider } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import LockIcon from '@mui/icons-material/Lock';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -33,7 +32,7 @@ const theme = createTheme({
   },
 });
 
-const Signup = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [isAgreed, setIsAgreed] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -62,45 +61,11 @@ const Signup = () => {
         <Typography component="h1" variant="h3" gutterBottom style={{ fontWeight: 'bold', margin:'1.5rem 0'}}>
            locaidad
           </Typography>
-          <Typography component="h1" variant="h5" gutterBottom style={{ fontWeight: 'bold', margin:'1rem 0' }}>
-            Create Your Account
+          <Typography component="h1" variant="h5" gutterBottom style={{ fontWeight: 'bold', margin:'1.5rem 0' }}>
+            Login to Your Account
           </Typography>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    name="username"
-                    type="text"
-                    autoComplete="username"
-                    placeholder="User Name"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AccountCircle />
-                        </InputAdornment>
-                      ),
-                      sx: {
-                        backgroundColor: theme.palette.grayish.main,
-                        '&:focus': {
-                          borderColor: theme.palette.primary.main,
-                        },
-                      },
-                    }}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: '10px',
-                        height: '3rem',
-                      },
-                      '& .MuiInputBase-input': {
-                        padding: '10px 14px',
-                      },
-                    }}
-                  />
-                </FormControl>
-              </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <TextField
@@ -205,6 +170,14 @@ const Signup = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
+                <Typography variant="body2" color="textSecondary" style={{ textAlign:'left' }}>
+                Forgotten Password?{' '}
+                  <span style={{ cursor: 'pointer', textDecoration: 'underline', color: '#ff2557' }} onClick={() => navigate('/forgot')}>
+                    Click Here
+                  </span>
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
                 <Button
                   type="submit"
                   fullWidth
@@ -222,7 +195,7 @@ const Signup = () => {
                   }}
                   disabled={!isAgreed}
                 >
-                  Sign Up
+                  Login
                 </Button>
               </Grid>
               <Grid item xs={12}>
@@ -244,9 +217,9 @@ const Signup = () => {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body2" color="textSecondary">
-                  Already have an account?{' '}
-                  <span style={{ cursor: 'pointer', textDecoration: 'underline', color: '#ff2557' }} onClick={() => navigate('/login')}>
-                    Login
+                Don't have an account?{' '}
+                  <span style={{ cursor: 'pointer', textDecoration: 'underline', color: '#ff2557' }} onClick={() => navigate('/signup')}>
+                    Sign up
                   </span>
                 </Typography>
               </Grid>
@@ -283,4 +256,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;

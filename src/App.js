@@ -1,12 +1,11 @@
 import React from 'react'
-import Home from './Components/Home/Home'
-import Signup from './Components/Auth/Signup'
+import Router from './Routes'
+
 
 const App = () => {
   return (
     <div>
-      <Home days={120}/>
-      <Signup/>
+      <Router/>
     </div>
   )
 }

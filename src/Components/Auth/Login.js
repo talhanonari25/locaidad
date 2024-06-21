@@ -55,10 +55,10 @@ const Login = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="100vw" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+      <Container component="main" maxWidth="100vw" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '85vh' }}>
         <div>
         <Box style={{ width: '100%', maxWidth: '400px', textAlign: 'center' }}>
-        <Typography component="h1" variant="h3" gutterBottom style={{ fontWeight: 'bold', margin:'1.5rem 0'}}>
+        <Typography component="h1" variant="h3" gutterBottom style={{ fontWeight: 'bold', margin:'1rem 0'}}>
            locaidad
           </Typography>
           <Typography component="h1" variant="h5" gutterBottom style={{ fontWeight: 'bold', margin:'1.5rem 0' }}>
@@ -156,8 +156,8 @@ const Login = () => {
                         checked={isAgreed}
                           onChange={handleCheckboxChange}
                           name="agreement"
-                          color="primary"
                           sx={{
+                            color:theme.palette.primary.main,
                             '& .Mui-checked': {
                               color: '#ff2557',
                             },
@@ -170,7 +170,7 @@ const Login = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body2" color="textSecondary" style={{ textAlign:'left' }}>
+                <Typography variant="body2" style={{ textAlign:'left' }}>
                 Forgotten Password?{' '}
                   <span style={{ cursor: 'pointer', textDecoration: 'underline', color: '#ff2557' }} onClick={() => navigate('/forgot')}>
                     Click Here
@@ -184,7 +184,7 @@ const Login = () => {
                   variant="contained"
                   color="primary"
                   style={{
-                    marginTop: '0.5rem',
+                    marginTop: '0.25rem',
                     borderRadius: '50px',
                     backgroundColor: isAgreed ? theme.palette.primary.main : theme.palette.primary.light,
                     color: 'white',
@@ -216,7 +216,7 @@ const Login = () => {
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2">
                 Don't have an account?{' '}
                   <span style={{ cursor: 'pointer', textDecoration: 'underline', color: '#ff2557' }} onClick={() => navigate('/signup')}>
                     Sign up

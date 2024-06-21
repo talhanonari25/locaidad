@@ -29,7 +29,7 @@ const ForgotPass = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="100vw" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+      <Container component="main" maxWidth="100vw" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '85vh' }}>
         <div>
         <Box style={{ width: '100%', maxWidth: '400px', textAlign: 'center' }}>
         <Typography component="h1" variant="h3" gutterBottom style={{ fontWeight: 'bold', margin:'1.5rem 0'}}>
@@ -92,7 +92,7 @@ const ForgotPass = () => {
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2">
                 Want to Login?{' '}
                   <span style={{ cursor: 'pointer', textDecoration: 'underline', color: '#ff2557' }} onClick={() => navigate('/login')}>
                     Login

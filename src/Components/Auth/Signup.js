@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { TextField, Button, Container, Typography, Grid, InputAdornment, Link, Checkbox, FormControl, FormControlLabel, FormGroup, Box, IconButton, createTheme, ThemeProvider } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -56,9 +56,9 @@ const Signup = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="100vw" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+      <Container component="main" maxWidth="100vw" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '85vh' }}>
         <div>
-        <Box style={{ width: '100%', maxWidth: '400px', textAlign: 'center' }}>
+        <Box style={{ width: '100%', maxWidth: '410px', textAlign: 'center' }}>
         <Typography component="h1" variant="h3" gutterBottom style={{ fontWeight: 'bold', margin:'1.5rem 0'}}>
            locaidad
           </Typography>
@@ -191,8 +191,8 @@ const Signup = () => {
                         checked={isAgreed}
                           onChange={handleCheckboxChange}
                           name="agreement"
-                          color="primary"
                           sx={{
+                            color:theme.palette.primary.main,
                             '& .Mui-checked': {
                               color: '#ff2557',
                             },
@@ -234,7 +234,7 @@ const Signup = () => {
                     marginTop: '0.25rem',
                     borderRadius: '50px',
                     height: '2.75rem',
-                    color: 'white',
+                    color: theme.palette.grayish.main,
                   }}
                   startIcon={<AppleIcon />}
                   onClick={handleContinueWithApple}
@@ -243,7 +243,7 @@ const Signup = () => {
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2">
                   Already have an account?{' '}
                   <span style={{ cursor: 'pointer', textDecoration: 'underline', color: '#ff2557' }} onClick={() => navigate('/login')}>
                     Login
@@ -253,7 +253,7 @@ const Signup = () => {
             </Grid>
           </form>
         </Box>
-        <div className='container' style={{ marginTop: '2rem' }}>
+        <div className='container' style={{ marginTop: '1rem' }}>
             <Grid container spacing={2} justifyContent="center">
             <Grid item>
                 <Link href="#" color="inherit">

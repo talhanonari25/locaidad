@@ -4,8 +4,10 @@ import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const theme = createTheme({
   palette: {
@@ -34,19 +36,73 @@ const theme = createTheme({
 
 const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [isAgreed, setIsAgreed] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleCheckboxChange = (event) => {
-    setIsAgreed(event.target.checked);
+  const handleCheckboxChange = (e) => {
+    setIsAgreed(e.target.checked);
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "email") {
+      setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email) {
+      setError("Please Enter Email Address.");
+      return;
+    } else if (!password) {
+      setError("Please Enter password.");
+      return;
+    }
+
+    let save = { email, password };
+    axios.post("http://184.72.214.148/auth/sign_in", save)
+    .then((res) => {
+        if (res.status === 200 && res.data.headers) {
+          setEmail('');
+          setPassword('');
+          console.log('User Login Successfully!!!');
+            const accessToken = res.data.headers['access-token'];
+            const tokenType = res.data.headers['token-type'];
+            const client = res.data.headers['client'];
+            const expiry = res.data.headers['expiry'];
+            const uid = res.data.headers['uid'];
+            sessionStorage.setItem("access-token", accessToken);
+            sessionStorage.setItem("token-type", tokenType);
+            sessionStorage.setItem("client", client);
+            sessionStorage.setItem("expiry", expiry);
+            sessionStorage.setItem("uid", uid);
+          navigate('/');
+        } else {
+            console.log("Error Message=>", res.data.message);
+        }
+    })
+    .catch((err)=>{
+      console.log(err.response.data.message)
+    })
+
+    const accessToken = sessionStorage.getItem("access-token");
+    if (!accessToken) {
+      navigate("/login");
+    }
+  };
+
+  const handleContinueWithGoogle = () => {
+    alert('Continue with Google clicked');
   };
 
   const handleContinueWithApple = () => {
@@ -64,6 +120,11 @@ const Login = () => {
           <Typography component="h1" variant="h5" gutterBottom style={{ fontWeight: 'bold', margin:'1.5rem 0' }}>
             Login to Your Account
           </Typography>
+          {error && (
+              <Typography color="error" gutterBottom>
+                {error}
+              </Typography>
+            )}
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2} justifyContent="center">
               <Grid item xs={12}>
@@ -75,6 +136,8 @@ const Login = () => {
                     type="email"
                     autoComplete="email"
                     placeholder="Email Address"
+                    value={email}
+                    onChange={handleInputChange}  
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -109,6 +172,8 @@ const Login = () => {
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="current-password"
                     placeholder="Password"
+                    value={password}
+                    onChange={handleInputChange}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -202,12 +267,29 @@ const Login = () => {
                 <Button
                   fullWidth
                   variant="contained"
-                  color="matteBlack"
                   style={{
                     marginTop: '0.25rem',
                     borderRadius: '50px',
                     height: '2.75rem',
-                    color: 'white',
+                    color: theme.palette.grayish.main,
+                    backgroundColor: '#0096FF',
+                  }}
+                  startIcon={<GoogleIcon />}
+                  onClick={handleContinueWithGoogle}
+                >
+                  Continue with Google
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  style={{
+                    marginTop: '0.25rem',
+                    borderRadius: '50px',
+                    height: '2.75rem',
+                    color: theme.palette.matteBlack.main,
+                    backgroundColor:'#fff',
                   }}
                   startIcon={<AppleIcon />}
                   onClick={handleContinueWithApple}

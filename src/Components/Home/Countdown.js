@@ -3,7 +3,7 @@ import { Container, Typography, Grid, Link, CssBaseline } from '@mui/material';
 import logo from '../../Assets/locaidad.png';
 
 const Countdown= ({days}) => {
-  const secondsInADay = 86400; // 24 hours * 60 minutes * 60 seconds
+  const secondsInADay = 86400;
   const totalSeconds = days * secondsInADay;
 
   const [count, setCount] = useState(totalSeconds);

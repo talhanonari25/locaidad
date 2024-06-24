@@ -26,6 +26,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import PhoneIcon from "@mui/icons-material/Phone";
+import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from "@mui/icons-material/Apple";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -167,11 +168,32 @@ const SignupForm = () => {
         //navigate("/login");
         console.log(res)
         console.log("You are registered!")
+        setFormData({
+          first_name: "",
+          last_name: "",
+          email: "",
+          password: "",
+          password_confirmation: "",
+          phone: "",
+          gender: "",
+          age: "",
+          lat:"",
+          long:"",
+          code: "",
+          date_of_birth: "",
+          username: "",
+          role:"regular",
+          referral_code: "",
+        });
+        navigate('/login')
       })
       .catch((err) => {
         console.log(err.response.data.message)
       });
-    console.log("Form Data: ", formData);
+  };
+
+  const handleContinueWithGoogle = () => {
+    alert('Continue with Google clicked');
   };
 
   const handleContinueWithApple = () => {
@@ -688,6 +710,23 @@ const SignupForm = () => {
                   disabled={!isAgreed}
                 >
                   Sign Up
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  style={{
+                    marginTop: '0.25rem',
+                    borderRadius: '50px',
+                    height: '2.75rem',
+                    color: theme.palette.grayish.main,
+                    backgroundColor: '#0096FF',
+                  }}
+                  startIcon={<GoogleIcon />}
+                  onClick={handleContinueWithGoogle}
+                >
+                  Continue with Google
                 </Button>
               </Grid>
               <Grid item xs={12}>

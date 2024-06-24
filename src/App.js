@@ -18,6 +18,16 @@ const App = () => {
     palette: {
       mode: 'dark',
     },
+      typography: {
+    fontFamily: [
+      "Roboto",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Arial",
+      "sans-serif",
+    ].join(","),
+  },
   }), []);
 
   // const theme = darkMode ? darkTheme : lightTheme;

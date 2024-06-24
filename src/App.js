@@ -1,18 +1,18 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Router from './Routes'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { IconButton } from '@mui/material';
-import { DarkMode, LightMode } from '@mui/icons-material';
+// import { IconButton } from '@mui/material';
+// import { DarkMode, LightMode } from '@mui/icons-material';
 
 const App = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
 
-  const lightTheme = useMemo(() => createTheme({
-    palette: {
-      mode: 'light',
-    },
-  }), []);
+  // const lightTheme = useMemo(() => createTheme({
+  //   palette: {
+  //     mode: 'light',
+  //   },
+  // }), []);
 
   const darkTheme = useMemo(() => createTheme({
     palette: {
@@ -20,18 +20,18 @@ const App = () => {
     },
   }), []);
 
-  const theme = darkMode ? darkTheme : lightTheme;
+  // const theme = darkMode ? darkTheme : lightTheme;
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-          <IconButton
+          {/* <IconButton
             style={{textAlign:'left'}}
             color="inherit"
             onClick={() => setDarkMode(!darkMode)}
           >
             {darkMode ? <LightMode /> : <DarkMode />}
-          </IconButton>
+          </IconButton> */}
       <Router/>
     </ThemeProvider>
   );

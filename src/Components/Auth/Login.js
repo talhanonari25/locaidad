@@ -202,12 +202,12 @@ const Login = () => {
                 <Button
                   fullWidth
                   variant="contained"
-                  color="matteBlack"
                   style={{
                     marginTop: '0.25rem',
                     borderRadius: '50px',
                     height: '2.75rem',
-                    color: 'white',
+                    color: theme.palette.matteBlack.main,
+                    backgroundColor:'#fff',
                   }}
                   startIcon={<AppleIcon />}
                   onClick={handleContinueWithApple}

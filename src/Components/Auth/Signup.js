@@ -165,8 +165,6 @@ const SignupForm = () => {
     axios
       .post("http://184.72.214.148/auth", formData)
       .then((res) => {
-        //navigate("/login");
-        console.log(res)
         console.log("You are registered!")
         setFormData({
           first_name: "",

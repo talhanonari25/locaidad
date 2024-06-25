@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Container, Typography, Grid, InputAdornment, Link, Checkbox, FormControl, FormControlLabel, FormGroup, Box, IconButton, createTheme, ThemeProvider } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
@@ -7,6 +7,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 import { useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 
 const theme = createTheme({
@@ -36,11 +37,19 @@ const theme = createTheme({
 
 const Login = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isAgreed, setIsAgreed] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    social_media_login: 1,
+    login_with_google: true,
+  });
 
   const handleCheckboxChange = (e) => {
     setIsAgreed(e.target.checked);
@@ -101,9 +110,71 @@ const Login = () => {
     }
   };
 
-  const handleContinueWithGoogle = () => {
-    alert('Continue with Google clicked');
-  };
+  const handleContinueWithGoogle= useGoogleLogin({
+    onSuccess: (codeResponse) => setUser(codeResponse),
+    onError: (error) => console.log('Login Failed:', error)
+});
+
+useEffect(() => {
+  if (user && user.access_token) {
+    axios
+      .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+        headers: {
+          Authorization: `Bearer ${user.access_token}`,
+          Accept: 'application/json'
+        }
+      })
+      .then((res) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          first_name: res.data.given_name,
+          last_name: res.data.family_name,
+          email: res.data.email
+        }));
+      })
+      .catch((err) => console.log(err));
+  }
+}, [user]);
+
+useEffect(() => {
+  if (formData.email !== '') {
+    axios.post("http://184.72.214.148/auth/sign_in", formData)
+    .then((res) => {
+        if (res.status === 200 && res.data.headers) {
+          console.log('User Login Successfully!!!');
+          console.log(res)
+          const accessToken = res.data.headers['access-token'];
+          const tokenType = res.data.headers['token-type'];
+          const client = res.data.headers['client'];
+          const expiry = res.data.headers['expiry'];
+          const uid = res.data.headers['uid'];
+          sessionStorage.setItem("access-token", accessToken);
+          sessionStorage.setItem("token-type", tokenType);
+          sessionStorage.setItem("client", client);
+          sessionStorage.setItem("expiry", expiry);
+          sessionStorage.setItem("uid", uid);
+            setFormData({
+              first_name: "",
+              last_name: "",
+              email: "",
+              social_media_login: 1,
+              login_with_google: true,
+            });
+          navigate('/');
+        } else {
+            console.log("Error Message=>", res.data.message);
+        }
+    })
+    .catch((err)=>{
+      console.log(err.response.data.message)
+    })
+  
+    const accessToken = sessionStorage.getItem("access-token");
+    if (!accessToken) {
+      navigate("/login");
+    }
+  }
+}, [formData, navigate]);
 
   const handleContinueWithApple = () => {
     alert('Continue with Apple clicked');

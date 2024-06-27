@@ -7,19 +7,31 @@ import logo from '../../Assets/locaided Logo.png';
 
 const Home = ({days}) => {
   const navigate = useNavigate();
-  const [countdown, setCountdown] = useState(days * 86400);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const targetDate = new Date('2024-10-26T00:00:00Z');
+    
+    const now = new Date();
+    const initialCountdown = Math.floor((targetDate - now) / 1000);
+  
+    const [countdown, setCountdown] = useState(initialCountdown);
+  
+    useEffect(() => {
+      const countdownInterval = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+  
+      return () => clearInterval(countdownInterval);
+    }, []);
+  
+    const dayRem = Math.floor(countdown / 86400);
+    const hrRem = Math.floor((countdown % 86400) / 3600);
+    const minRem = Math.floor((countdown % 3600) / 60);
+    const secRem = countdown % 60;
 
   useEffect(() => {
     const token = sessionStorage.getItem("access-token");
     setIsLoggedIn(!!token);
-  }, []);
-
-  useEffect(() => {
-    const countdownInterval = setInterval(() => {
-      setCountdown((prevCountdown) => prevCountdown - 1);
-    }, 1000);
-    return () => clearInterval(countdownInterval);
   }, []);
 
   const handleLogout = () => {
@@ -27,11 +39,6 @@ const Home = ({days}) => {
     setIsLoggedIn(false);
     navigate('/login');
   };
-
-  const dayRem = Math.floor(countdown / 86400);
-  const hrRem = Math.floor((countdown % 86400) / 3600);
-  const minRem = Math.floor((countdown % 3600) / 60);
-  const secRem = countdown % 60;
 
   const small_screen = useMediaQuery('(max-width:720px)');
 

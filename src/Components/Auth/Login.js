@@ -79,7 +79,7 @@ const Login = () => {
     }
 
     let save = { email, password };
-    axios.post("//184.72.214.148/auth/sign_in", save)
+    axios.post("http://184.72.214.148/auth/sign_in", save)
     .then((res) => {
         if (res.status === 200 && res.data.headers) {
           setEmail('');
